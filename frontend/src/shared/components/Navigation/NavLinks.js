@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const NavLinks = () => {
+const NavLinks = ({ onClick }) => {
   return (
-    <ul className="sm:flex">
+    <ul className="sm:flex" onClick={onClick}>
       <li className="m-2 p-2">
         <NavLink
           to="/"

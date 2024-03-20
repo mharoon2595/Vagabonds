@@ -4,6 +4,7 @@ import NewPlaces from "./places/pages/NewPlaces";
 import ErrorElement from "./utils/ErrorElement";
 import { Outlet } from "react-router-dom";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import UserPlaces from "./places/pages/UserPlaces";
 
 const AppLayout = () => {
   return (
@@ -25,6 +26,7 @@ const route = createBrowserRouter([
         element: <Users />,
       },
       { path: "/places/new", element: <NewPlaces /> },
+      { path: "/:userId/places", element: <UserPlaces /> },
     ],
   },
 ]);

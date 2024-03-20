@@ -12,7 +12,7 @@ code {
     monospace;
 } */
 body{
-  background-color: #E8E8E8;
+  background-color: grey;
   box-sizing: border-box;
 }
 
@@ -33,6 +33,28 @@ body{
 
 .slide-in-left-exit-active {
   transform: translateX(-100%);
+  opacity: 0;
+  transition: all 200ms;
+}
+
+.modal-enter {
+  transform: translateY(-10rem);
+  opacity: 0;
+}
+
+.modal-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: all 200ms;
+}
+
+.modal-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-exit-active {
+  transform: translateY(-10rem);
   opacity: 0;
   transition: all 200ms;
 }

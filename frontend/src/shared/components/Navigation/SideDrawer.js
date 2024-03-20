@@ -19,7 +19,7 @@ const SideDrawer = ({ onClick, show }) => {
             X
           </div>
         </div>
-        <NavLinks />
+        <NavLinks onClick={onClick} />
       </div>
     </CSSTransition>
   );
