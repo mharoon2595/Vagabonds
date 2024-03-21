@@ -1,5 +1,6 @@
 import React from "react";
 import PlaceItem from "./PlaceItem";
+import { Link } from "react-router-dom";
 
 const PlaceList = (props) => {
   if (props.item.length === 0) {
@@ -9,7 +10,9 @@ const PlaceList = (props) => {
           <h2 className="text-2xl text-center">
             No places found. Maybe create one?
           </h2>
-          <button className="hover:text-blue-400  ">Share place</button>
+          <button className="`p-[2px] sm:p-2  border-2 border-green-500 bg-green-200 rounded-lg text-black">
+            <Link to="/places/new">Share place</Link>
+          </button>
         </div>
       </div>
     );

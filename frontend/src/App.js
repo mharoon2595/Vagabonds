@@ -6,12 +6,27 @@ import { Outlet } from "react-router-dom";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import UserPlaces from "./places/pages/UserPlaces";
 import UpdatePlaces from "./places/pages/UpdatePlaces";
+import AuthLogin from "./user/pages/AuthLogin";
+import AuthNewUser from "./user/pages/AuthNewUser";
+import { AuthContext } from "./shared/context/auth-context";
+import { useCallback, useState } from "react";
 
 const AppLayout = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
   return (
     <>
-      <MainNavigation />
-      <Outlet />
+      <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+        <MainNavigation />
+        <Outlet />
+      </AuthContext.Provider>
     </>
   );
 };
@@ -29,6 +44,8 @@ const route = createBrowserRouter([
       { path: "/places/new", element: <NewPlaces /> },
       { path: "/places/:placeId", element: <UpdatePlaces /> },
       { path: "/:userId/places", element: <UserPlaces /> },
+      { path: "/auth/new", element: <AuthNewUser /> },
+      { path: "/auth", element: <AuthLogin /> },
     ],
   },
 ]);

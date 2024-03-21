@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { DUMMY_PLACES } from "./UserPlaces";
 import Input from "../../shared/components/FormElements/Input";
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from "../../utils/validator";
 import { useForm } from "../../shared/hooks/form-hooks";
 import "./NewPlaces.css";
+import { AuthContext } from "../../shared/context/auth-context";
 
 const UpdatePlaces = () => {
+  const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const params = useParams().placeId;
-
   const identifiedPlace = DUMMY_PLACES.find((p) => p.id === params);
+  const navigate = useNavigate();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -27,26 +29,37 @@ const UpdatePlaces = () => {
   );
 
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: identifiedPlace.name,
-          isValid: true,
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: {
+            value: identifiedPlace.name,
+            isValid: true,
+          },
+          description: {
+            value: identifiedPlace.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: identifiedPlace.description,
-          isValid: true,
-        },
-      },
-      true
-    );
-    setIsLoading(false);
+        true
+      );
+      setIsLoading(false);
+    }
   }, [setFormData, identifiedPlace]);
+
+  if (!auth.isLoggedIn) {
+    // return (
+    //   <div className="text center p-2 m-2 text-lg">
+    //     Please login to access this page.
+    //   </div>
+    // );
+    navigate("/");
+  }
 
   if (!identifiedPlace) {
     return (
       <div className="p-2 m-2 text-center">
-        <h1>No places found.Please add a place and try again.</h1>
+        <h1>No places found. Please add a place and try again.</h1>
       </div>
     );
   }

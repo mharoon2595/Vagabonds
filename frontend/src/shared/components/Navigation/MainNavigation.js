@@ -33,9 +33,9 @@ const MainNavigation = () => {
               }}
             >
               <div className=" m-1 p-1 flex flex-col justify-between align-middle w-[40px] h-[30px] cursor-pointer">
-                <div className="w-full h-[3px] bg-white" />
-                <div className="w-full h-[3px] bg-white" />
-                <div className="w-full h-[3px] bg-white" />
+                <div className="w-full h-[3px] bg-black" />
+                <div className="w-full h-[3px] bg-black" />
+                <div className="w-full h-[3px] bg-black" />
               </div>
             </div>
 
