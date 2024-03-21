@@ -5,9 +5,9 @@ import { CSSTransition } from "react-transition-group";
 
 const ModalOverlay = (props) => {
   const content = (
-    <div className="">
-      <header className="">
-        <h2>{props.header}</h2>
+    <div className="z-[100] fixed top-[22vh] left-[10%] right-[10%} w-[80%]  bg-white rounded-lg">
+      <header className="w-full bg-purple-500 text-center rounded-t-lg ">
+        <h2 className="p-1">{props.header}</h2>
       </header>
       <form
         onSubmit={
@@ -15,7 +15,7 @@ const ModalOverlay = (props) => {
         }
       >
         <div className="">{props.children}</div>
-        <footer className="">{props.footer}</footer>
+        <footer className="p-2 flex flex-row-reverse">{props.footer}</footer>
       </form>
     </div>
   );
@@ -25,7 +25,7 @@ const ModalOverlay = (props) => {
 const Modal = (props) => {
   return (
     <>
-      {props.show && <Backdrops onClick={props.onCancel} />}
+      {props.show && <Backdrops onClick={props.onCancel} viewMap />}
       <CSSTransition
         in={props.show}
         mountOnEnter

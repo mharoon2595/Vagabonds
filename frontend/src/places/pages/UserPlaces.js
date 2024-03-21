@@ -2,7 +2,7 @@ import React from "react";
 import PlaceList from "../components/PlaceList";
 import { useParams } from "react-router-dom";
 
-const DUMMY_PLACES = [
+export const DUMMY_PLACES = [
   {
     id: "p1",
     name: "Empire State Building",
@@ -11,8 +11,8 @@ const DUMMY_PLACES = [
       "https://flatironnomad.nyc/wp-content/uploads/2023/04/esb-header-history-scaled.jpg",
     address: "20 W 34th St., New York, NY 10001, United States",
     location: {
-      lat: "40.7484405",
-      lng: "-73.9856644",
+      lat: 40.7484405,
+      lng: -73.9856644,
     },
     creator: "u1",
   },

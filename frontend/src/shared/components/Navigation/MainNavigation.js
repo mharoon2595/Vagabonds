@@ -23,7 +23,7 @@ const MainNavigation = () => {
           setSidebar(false);
         }}
       />
-      <div className="bg-red-500 ">
+      <div className="bg-white ">
         <MainHeader>
           <div className="  flex justify-between align-bottom gap-2 ">
             <div
@@ -39,7 +39,7 @@ const MainNavigation = () => {
               </div>
             </div>
 
-            <h1 className=" my-auto mx-2 p-2 text-2xl text-white">
+            <h1 className=" my-auto mx-2 p-2 text-2xl text-black">
               <Link to="/">YourPlaces</Link>
             </h1>
 

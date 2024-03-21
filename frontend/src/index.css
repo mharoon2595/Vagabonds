@@ -11,8 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 } */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+
 body{
-  background-color: grey;
+  background-image: linear-gradient(to right, #EFEFBB, #D4D3DD);
+  font-family: comic sans ms, serif;
+  height: 100vh;
+  margin: 0;
+  /* background-color: grey; */
   box-sizing: border-box;
 }
 

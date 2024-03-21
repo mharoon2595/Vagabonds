@@ -14,7 +14,7 @@ const NavLinks = ({ onClick }) => {
           ALL USERS
         </NavLink>
       </li>
-      <li className="m-2 p-2 active:bg-yellow-400">
+      <li className="m-2 p-2">
         <NavLink
           to="/u1/places"
           className={({ isActive }) =>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Modal from "../../shared/components/UIElements/Modal";
+import Map from "../../shared/components/UIElements/Map";
+import { Link } from "react-router-dom";
 
 const PlaceItem = ({
   name,
@@ -20,10 +22,17 @@ const PlaceItem = ({
         show={showMap}
         onCancel={closeMapHandler}
         header={address}
-        footer={<button onClick={closeMapHandler}>CLOSE</button>}
+        footer={
+          <button
+            className="p-[2px] sm:p-2  border-2 border-red-600 bg-red-200 rounded-lg"
+            onClick={closeMapHandler}
+          >
+            Close
+          </button>
+        }
       >
         <div className="h-[20rem] w-full">
-          <h2>THE MAP</h2>
+          <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
       <div className=" m-2 p-2  flex justify-center">
@@ -36,11 +45,14 @@ const PlaceItem = ({
           </div>
           <hr className="my-[4px] sm:my-2" />
           <div className=" pb-4 flex justify-evenly sm:justify-center gap-0 sm:gap-4 items-center">
-            <button className=" p-[2px] sm:p-2  border-2 border-green-500 bg-green-200 rounded-lg">
+            <button
+              className=" p-[2px] sm:p-2  border-2 border-green-500 bg-green-200 rounded-lg"
+              onClick={openMapHandler}
+            >
               View on map
             </button>
             <button className=" p-[2px] sm:p-2 border-2 border-yellow-400 bg-yellow-100 rounded-lg">
-              Edit
+              <Link to="/places/p1">Edit</Link>
             </button>
             <button className=" p-[2px] sm:p-2  border-2 border-red-600 bg-red-200 rounded-lg">
               Delete
