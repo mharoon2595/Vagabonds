@@ -1,20 +1,36 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import UsersList from "../components/UsersList";
+import swal from "sweetalert";
 
 const Users = () => {
-  const USERS = [
-    {
-      id: "u1",
-      name: "Miles",
-      image:
-        "https://pyxis.nymag.com/v1/imgs/5ff/9bc/6098962edd260c49d52d4b2b58d4df0b62-13-miles-morales-lede.rhorizontal.w700.jpg",
-      places: 3,
-    },
-  ];
+  const [usersList, setUsersList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log("loading--->", isLoading);
+
+  const getUsers = useCallback(async () => {
+    try {
+      const response = await fetch("http://localhost:5000/api/users");
+      const resUsers = await response.json();
+      console.log(resUsers);
+      setIsLoading(false);
+      setUsersList(resUsers);
+    } catch (err) {
+      setIsLoading(false);
+      await swal("An error occured", `${err.message}`, "error");
+    }
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getUsers();
+  }, []);
+
+  console.log("USERS LIST--->", usersList);
 
   return (
     <div>
-      <UsersList items={USERS} />
+      <UsersList isLoading={isLoading} items={usersList} />
     </div>
   );
 };

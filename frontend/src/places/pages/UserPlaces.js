@@ -1,43 +1,61 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PlaceList from "../components/PlaceList";
-import { useParams } from "react-router-dom";
+import { AuthContext } from "../../shared/context/auth-context";
+import swal from "sweetalert";
+import { useNavigate, useParams } from "react-router-dom";
 
-export const DUMMY_PLACES = [
-  {
-    id: "p1",
-    name: "Empire State Building",
-    description: "One of the most famous skyscrapers in the world",
-    imageUrl:
-      "https://flatironnomad.nyc/wp-content/uploads/2023/04/esb-header-history-scaled.jpg",
-    address: "20 W 34th St., New York, NY 10001, United States",
-    location: {
-      lat: 40.7484405,
-      lng: -73.9856644,
-    },
-    creator: "u1",
-  },
-  {
-    id: "p1",
-    name: "Empire State Building",
-    description: "One of the most famous skyscrapers in the world",
-    imageUrl:
-      "https://flatironnomad.nyc/wp-content/uploads/2023/04/esb-header-history-scaled.jpg",
-    address: "20 W 34th St., New York, NY 10001, United States",
-    location: {
-      lat: "40.7484405",
-      lng: "-73.9856644",
-    },
-    creator: "u2",
-  },
-];
+export const DUMMY_PLACES = [];
 
 const UserPlaces = () => {
-  const params = useParams().userId;
-  const filteredList = DUMMY_PLACES.filter((place) => place.creator === params);
+  const [isLoading, setIsLoading] = useState(false);
+  const userId = useParams().userId;
+  const auth = useContext(AuthContext);
+  const [places, setPlaces] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    async function fetchPlaces() {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/places/user/${userId}`
+        );
+        const placesRetrieved = await response.json();
+        console.log("JOJO PLACES--->", placesRetrieved);
+        if (!response.ok) {
+          throw new Error("Places could not be fetched");
+        }
+        setIsLoading(false);
+        setPlaces(placesRetrieved);
+      } catch (err) {
+        setIsLoading(false);
+        navigate("/");
+        await swal("An error occured", err.message, "error");
+      }
+    }
+    fetchPlaces();
+  }, []);
+
+  const refreshListAfterDeletion = (pid) => {
+    setPlaces((prevPlaces) => {
+      console.log("prevPLACES---->", prevPlaces);
+      prevPlaces.places.filter((place) => place.id !== pid);
+    });
+  };
+
+  // console.log("places--->", places);
+  // console.log("user id--->", auth.userId);
 
   return (
     <div>
-      <PlaceList item={filteredList} />
+      <PlaceList
+        userId={userId}
+        isLoading={isLoading}
+        item={places}
+        deletionHandler={(pid) => {
+          refreshListAfterDeletion(pid);
+        }}
+      />
     </div>
   );
 };

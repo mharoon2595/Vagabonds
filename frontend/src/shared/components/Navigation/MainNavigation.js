@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MainHeader from "./MainHeader";
 import { Link } from "react-router-dom";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import Backdrops from "../UIElements/Backdrops";
+import Example from "./Dropdown";
+import { AuthContext } from "../../context/auth-context";
 
 const MainNavigation = () => {
   const [sidebar, setSidebar] = useState(false);
+  const auth = useContext(AuthContext);
 
   return (
     <>
@@ -26,13 +29,18 @@ const MainNavigation = () => {
       <div className="bg-white ">
         <MainHeader>
           <div className="  flex justify-between align-bottom gap-2 ">
-            <div
-              className="sm:hidden my-auto"
-              onClick={() => {
-                setSidebar(true);
-              }}
-            >
-              <div className=" m-1 p-1 flex flex-col justify-between align-middle w-[40px] h-[30px] cursor-pointer">
+            <div className="flex flex-row-reverse gap-2 sm:hidden my-auto">
+              {auth.isLoggedIn && (
+                <div>
+                  <Example />
+                </div>
+              )}
+              <div
+                className=" m-1 p-1 flex flex-col justify-between align-middle w-[40px] h-[30px] cursor-pointer"
+                onClick={() => {
+                  setSidebar(true);
+                }}
+              >
                 <div className="w-full h-[3px] bg-black" />
                 <div className="w-full h-[3px] bg-black" />
                 <div className="w-full h-[3px] bg-black" />

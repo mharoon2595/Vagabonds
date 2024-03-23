@@ -1,19 +1,24 @@
 import React, { useContext, useState } from "react";
 import Modal from "../../shared/components/UIElements/Modal";
 import Map from "../../shared/components/UIElements/Map";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../shared/context/auth-context";
+import swal from "sweetalert";
 
 const PlaceItem = ({
   name,
   description,
   image,
-  creatorId,
+  id,
   address,
   coordinates,
+  isLoading,
+  userId,
+  deletionHandler,
 }) => {
   const [showMap, setShowMap] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const navigate = useNavigate();
 
   const openMapHandler = () => setShowMap(true);
   const closeMapHandler = () => setShowMap(false);
@@ -27,6 +32,27 @@ const PlaceItem = ({
   };
 
   const auth = useContext(AuthContext);
+
+  if (isLoading) {
+    return (
+      <div className=" m-3 p-3 animate-pulse w-[50%] h-[400px] bg-slate-400 rounded-lg"></div>
+    );
+  }
+
+  console.log("place id--->", id);
+
+  const deleteHandler = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/places/${id}`, {
+        method: "DELETE",
+      });
+      swal("Done", "Deletion successful", "success");
+      closeDeleteHandler();
+      deletionHandler(id);
+    } catch (err) {
+      swal("Error", "Please try again", "error");
+    }
+  };
 
   return (
     <>
@@ -62,7 +88,7 @@ const PlaceItem = ({
             </button>
             <button
               className="p-[2px] sm:p-2  border-2 border-green-500 bg-green-200 rounded-lg"
-              onClick={() => console.log("deletion successful")}
+              onClick={deleteHandler}
             >
               Yes
             </button>
@@ -85,12 +111,14 @@ const PlaceItem = ({
             >
               View on map
             </button>
-            {auth.isLoggedIn && (
-              <button className=" p-[2px] sm:p-2 border-2 border-yellow-400 bg-yellow-100 rounded-lg">
-                <Link to="/places/p1">Edit</Link>
-              </button>
+            {auth.isLoggedIn && auth.userId === userId && (
+              <Link to={`/places/${id}`}>
+                <button className=" p-[2px] sm:p-2 border-2 border-yellow-400 bg-yellow-100 rounded-lg">
+                  Edit
+                </button>
+              </Link>
             )}
-            {auth.isLoggedIn && (
+            {auth.isLoggedIn && auth.userId === userId && (
               <button
                 className=" p-[2px] sm:p-2  border-2 border-red-600 bg-red-200 rounded-lg"
                 onClick={openDeleteHandler}

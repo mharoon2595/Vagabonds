@@ -1,13 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../../places/pages/NewPlaces.css";
 import Input from "../../shared/components/FormElements/Input";
 import { useForm } from "../../shared/hooks/form-hooks";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH } from "../../utils/validator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { AuthContext } from "../../shared/context/auth-context";
+import swal from "sweetalert";
 
 const AuthLogin = () => {
   const auth = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formState, inputHandler] = useForm(
     {
@@ -23,15 +26,44 @@ const AuthLogin = () => {
     false
   );
 
-  const submitHandler = (event) => {
+  console.log("auth context from outlet--->", auth);
+
+  const submitHandler = async (event) => {
     event.preventDefault();
-    console.log("entered creds--->", formState);
-    auth.login();
+    setIsLoading(true);
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        }),
+      });
+      const loginResponse = await response.json();
+      if (!response.ok) {
+        throw new Error("Check your credentials and try again");
+      }
+      setIsLoading(false);
+      console.log("CONTEXT USER ID--->", loginResponse.user);
+      auth.login(
+        loginResponse.user.id,
+        loginResponse.user.name,
+        loginResponse.user.places
+      );
+      console.log("CONTEXT LOGIN STATE--->", auth);
+      navigate("/");
+      await swal("Logged In", "Awesome!!", "success");
+    } catch (err) {
+      setIsLoading(false);
+      await swal("Oops!", `${err.message}`, "error");
+    }
   };
 
   return (
     <>
       <form className="place-form" onSubmit={submitHandler}>
+        <div className="text-center text-green-500 text-xl">Login</div>
         <Input
           id="email"
           element="input"

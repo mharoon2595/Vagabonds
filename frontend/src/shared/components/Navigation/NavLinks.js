@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
+import Example from "./Dropdown";
 
-const NavLinks = ({ onClick }) => {
+const NavLinks = ({ onClick, sidebar }) => {
   const auth = useContext(AuthContext);
 
   return (
@@ -20,7 +21,7 @@ const NavLinks = ({ onClick }) => {
       {auth.isLoggedIn && (
         <li className="m-2 p-2">
           <NavLink
-            to="/u1/places"
+            to={`/${auth.userId}/places`}
             className={({ isActive }) =>
               isActive ? "p-1 bg-yellow-400 border border-black rounded-lg" : ""
             }
@@ -53,9 +54,9 @@ const NavLinks = ({ onClick }) => {
           </NavLink>
         </li>
       )}
-      {auth.isLoggedIn && (
-        <li className="m-2 p-2 border-2 border-black rounded-md ">
-          <button onClick={() => auth.logout()}> LOGOUT</button>
+      {auth.isLoggedIn && !sidebar && (
+        <li className="my-auto p-1   ">
+          <Example />
         </li>
       )}
     </ul>
