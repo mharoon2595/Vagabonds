@@ -97,7 +97,10 @@ const PlaceItem = ({
       ></Modal>
       <div className=" m-2 p-2  flex justify-center">
         <div className=" flex flex-col w-[60%] sm:w-[50%] h-[400px] sm:h-[550px] justify-between bg-white rounded-lg shadow-xl">
-          <img src={image} className="w-full h-[60%] rounded-t-lg" />
+          <img
+            src={`http://localhost:5000/${image}`}
+            className="w-full h-[60%] rounded-t-lg"
+          />
           <div className=" mx-2 flex flex-col justify-between items-center text-center ">
             <h1 className="text-2xl font-bold">{name}</h1>
             <h2 className="text-lg font-semibold">{description}</h2>

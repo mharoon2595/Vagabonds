@@ -9,10 +9,11 @@ const user = require("../models/user");
 
 const getPlacesbyUserID = async (req, res, next) => {
   const params = req.params.uid;
-
+  console.log("user id--->", params);
   let places;
   try {
     places = await Place.find({ creator: params });
+    console.log("PLACES FROM BACKEND-->", places);
   } catch (err) {
     const error = new HttpError(
       "Fetching places failed, please try again later",
@@ -21,13 +22,15 @@ const getPlacesbyUserID = async (req, res, next) => {
     return next(error);
   }
 
-  if (!places || places.length == 0) {
+  if (!places) {
     return next(
       new HttpError("Could not find a user with the specified ID", 404)
     );
   }
 
-  res.json({ places: places.map((place) => place.toObject()) });
+  res.json({
+    places: places.map((place) => place.toObject({ getters: true })),
+  });
 };
 
 const getPlaceByID = async (req, res, next) => {
@@ -46,6 +49,7 @@ const getPlaceByID = async (req, res, next) => {
       new HttpError("Could not find a place with the specified ID", 404)
     );
   }
+  console.log("PLACE FROM BACKEND-->", place);
   res.json({ place: place.toObject({ getters: true }) });
 };
 
@@ -70,12 +74,12 @@ const createPlace = async (req, res, next) => {
     title,
     description,
     location: coordinates,
-    image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Calicut_Beach.jpg/640px-Calicut_Beach.jpg",
+    image: req.file.path,
     address,
     creator,
   });
 
+  console.log("added place-->", newPlace);
   let user;
 
   try {

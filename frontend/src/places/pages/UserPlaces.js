@@ -43,9 +43,6 @@ const UserPlaces = () => {
     });
   };
 
-  // console.log("places--->", places);
-  // console.log("user id--->", auth.userId);
-
   return (
     <div>
       <PlaceList

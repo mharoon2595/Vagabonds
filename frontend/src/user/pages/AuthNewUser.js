@@ -31,6 +31,10 @@ const AuthNewUser = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   );
@@ -38,24 +42,20 @@ const AuthNewUser = () => {
   const submitHandler = async (event) => {
     setIsLoading(true);
     event.preventDefault();
-    console.log("entered creds--->", formState);
     try {
+      const formData = new FormData();
+      formData.append("email", formState.inputs.email.value);
+      formData.append("name", formState.inputs.username.value);
+      formData.append("password", formState.inputs.password.value);
+      formData.append("image", formState.inputs.image.value);
       const signup = await fetch("http://localhost:5000/api/users/signup", {
         method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          name: formState.inputs.username.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        }),
+        body: formData,
       });
       const signupResponse = await signup.json();
       if (!signup.ok) {
-        console.log(signupResponse);
         throw new Error(signupResponse.message);
       }
-      console.log("signUp details--->", signupResponse);
-      setIsLoading(false);
       navigate("/auth");
       await swal(
         `Alright ${formState.inputs.username.value}!!`,
@@ -63,7 +63,6 @@ const AuthNewUser = () => {
         "success"
       );
     } catch (err) {
-      console.log("error-->", err);
       setIsLoading(false);
       await swal("Error", `${err.message}`, "error");
     }
@@ -96,7 +95,7 @@ const AuthNewUser = () => {
           onInput={inputHandler}
           validators={[VALIDATOR_EMAIL()]}
         />
-        <ImageUpload center />
+        <ImageUpload center onInput={inputHandler} id="image" />
         <Input
           id="password"
           element="input"

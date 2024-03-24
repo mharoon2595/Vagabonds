@@ -12,9 +12,9 @@ const ImageUpload = (props) => {
       return;
     }
     const fileReader = new FileReader();
-    fileReader.onload(() => {
+    fileReader.onload = () => {
       setPreviewURL(fileReader.result);
-    });
+    };
     fileReader.readAsDataURL(file);
   }, [file]);
 
@@ -23,7 +23,7 @@ const ImageUpload = (props) => {
     let fileIsValid;
     fileIsValid = isValid;
     if (event.target.files && event.target.files.length === 1) {
-      const pickedFile = event.target.file[0];
+      pickedFile = event.target.files[0];
       setFile(pickedFile);
       setIsValid(true);
       fileIsValid = true;
@@ -45,12 +45,13 @@ const ImageUpload = (props) => {
         ref={filePickerRef}
         style={{ display: "none" }}
         type="file"
-        accept=".jpg,.png,.jpeg"
+        accept=".jpg,.png,.jpeg,.webp"
         onChange={pickedHandler}
       />
       <div className={`image-upload ${props.center && "center"}`}>
         <div className="image-upload__preview">
-          <img src="" alt="Preview" />
+          {previewURL && <img src={previewURL} alt="Preview" />}
+          {!previewURL && <p>Please choose an image.</p>}
         </div>
         <button
           type="button"
@@ -60,6 +61,7 @@ const ImageUpload = (props) => {
           PICK IMAGE
         </button>
       </div>
+      {!isValid && <p>{props.errorText}</p>}
     </div>
   );
 };

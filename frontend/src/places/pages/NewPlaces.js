@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { useOutletContext } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/auth-context";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 
 const NewPlaces = () => {
   const navigate = useNavigate();
@@ -27,30 +28,33 @@ const NewPlaces = () => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
 
-  console.log("logged in user-->", auth.userId);
   const formSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
+      const formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("creator", auth.userId);
+      formData.append("image", formState.inputs.image.value);
       const response = await fetch("http://localhost:5000/api/places", {
         method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userId,
-        }),
+        body: formData,
       });
       const addPlace = await response.json();
       if (!response.ok) {
         throw new Error(addPlace.message);
       }
-      console.log("added place--->", addPlace);
+
       setIsLoading(false);
       navigate("/");
       await swal(`Alright!`, "Place has been added!", "success");
@@ -61,11 +65,6 @@ const NewPlaces = () => {
   };
 
   if (!auth.isLoggedIn) {
-    // return (
-    //   <div className="text center p-2 m-2 text-lg">
-    //     Please login to access this page.
-    //   </div>
-    // );
     navigate("/");
   }
 
@@ -73,6 +72,9 @@ const NewPlaces = () => {
     <>
       {isLoading && <LoadingSpinner asOverlay />}
       <form className="place-form" onSubmit={formSubmit}>
+        <div className="flex justify-center text-lg text-green-500">
+          Add a place
+        </div>
         <Input
           id="title"
           element="input"
@@ -98,6 +100,7 @@ const NewPlaces = () => {
           validators={[VALIDATOR_REQUIRE()]}
           onInput={inputHandler}
         />
+        <ImageUpload center onInput={inputHandler} id="image" />
         <button
           className={`p-[2px] sm:p-2  border-2 border-green-500 bg-green-200 rounded-lg ${
             formState.isValid ? "" : "opacity-30"

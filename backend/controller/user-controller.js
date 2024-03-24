@@ -44,8 +44,7 @@ const registerUser = async (req, res, next) => {
     name,
     email,
     password,
-    image:
-      "https://pyxis.nymag.com/v1/imgs/5ff/9bc/6098962edd260c49d52d4b2b58d4df0b62-13-miles-morales-lede.rhorizontal.w700.jpg",
+    image: req.file.path,
     places: [],
   });
 
@@ -80,7 +79,7 @@ const loginUser = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ message: "Logged in" });
+  res.status(201).json({ user: existingUser.toObject({ getters: true }) });
 };
 
 exports.getAllUsers = getAllUsers;

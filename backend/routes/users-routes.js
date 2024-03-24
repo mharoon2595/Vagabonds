@@ -6,9 +6,12 @@ const {
   loginUser,
 } = require("../controller/user-controller");
 const router = express.Router();
+const fileUpload = require("../middleware/fileUpload");
 
 router.post(
   "/signup",
+  fileUpload.single("image"),
+
   [
     check("name").not().isEmpty(),
     check("email").isEmail(),
