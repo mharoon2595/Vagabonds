@@ -7,8 +7,11 @@ const NavLinks = ({ onClick, sidebar }) => {
   const auth = useContext(AuthContext);
 
   return (
-    <ul className="sm:flex gap-2" onClick={onClick}>
-      <li className="sm:my-auto m-2 p-2 sm:m-1 sm:p-2 maxWidth text-lg sm:text-[1.85vw] lg:text-lg">
+    <ul className="sm:flex gap-2">
+      <li
+        className="sm:my-auto m-2 p-2 sm:m-1 sm:p-2 maxWidth text-lg sm:text-[1.85vw] lg:text-lg"
+        onClick={onClick}
+      >
         <NavLink
           to="/"
           className={({ isActive }) =>
@@ -22,7 +25,10 @@ const NavLinks = ({ onClick, sidebar }) => {
         </NavLink>
       </li>
       {auth.isLoggedIn && (
-        <li className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg">
+        <li
+          className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg"
+          onClick={onClick}
+        >
           <NavLink
             to={`/${auth.userId}/places`}
             className={({ isActive }) =>
@@ -39,7 +45,10 @@ const NavLinks = ({ onClick, sidebar }) => {
         </li>
       )}
       {auth.isLoggedIn && (
-        <li className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg">
+        <li
+          className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg"
+          onClick={onClick}
+        >
           <NavLink
             to="/places/new"
             className={({ isActive }) =>
@@ -56,7 +65,10 @@ const NavLinks = ({ onClick, sidebar }) => {
         </li>
       )}
       {!auth.isLoggedIn && (
-        <li className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg">
+        <li
+          className="my-auto sm:my-auto mx-2 p-2 maxWidth sm:m-1 sm:p-2 text-lg sm:text-[1.85vw] lg:text-lg"
+          onClick={onClick}
+        >
           <NavLink
             to="/auth"
             className={({ isActive }) =>

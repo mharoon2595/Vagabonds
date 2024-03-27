@@ -12,14 +12,16 @@ const SideDrawer = ({ onClick, show }) => {
       mountOnEnter
       unmountOnExit
     >
-      <div className="absolute z-[100] h-full minWidth w-[50%] bg-slate-500 sm:hidden ">
+      <div className="absolute z-[100] h-full minWidth w-[50%]  bg-slate-500 sm:hidden ">
         <div className=" p-2 flex justify-between">
-          <h1
-            className="font-bold text-white"
-            style={{ fontFamily: "Segoe Script" }}
-          >
-            AdventurersAssemble
-          </h1>
+          <div className="max-w-[75%] text">
+            <p
+              className="font-bold break-words text-white"
+              style={{ fontFamily: "Segoe Script" }}
+            >
+              MENU
+            </p>
+          </div>
           <div className="hover:scale-125 cursor-pointer" onClick={onClick}>
             X
           </div>

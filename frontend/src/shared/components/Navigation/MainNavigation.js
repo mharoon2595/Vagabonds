@@ -26,7 +26,7 @@ const MainNavigation = () => {
           setSidebar(false);
         }}
       />
-      <div className="bg-white min-w-[330px] ">
+      <div className="sticky top-0 bg-white w-full ">
         <MainHeader>
           <div className="  flex justify-between align-bottom ">
             <div className="flex flex-row-reverse gap-2 sm:hidden my-auto">

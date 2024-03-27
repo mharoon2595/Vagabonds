@@ -5,8 +5,8 @@ import Users from "./user/pages/Users";
 // import ErrorElement from "./utils/ErrorElement";
 // import UserPlaces from "./places/pages/UserPlaces";
 // import UpdatePlaces from "./places/pages/UpdatePlaces";
-// import AuthLogin from "./user/pages/AuthLogin";
-// import AuthNewUser from "./user/pages/AuthNewUser";
+import AuthLogin from "./user/pages/AuthLogin";
+import AuthNewUser from "./user/pages/AuthNewUser";
 import { AuthContext } from "./shared/context/auth-context";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import AppLayout from "./AppLayout";
@@ -16,8 +16,8 @@ const NewPlaces = React.lazy(() => import("./places/pages/NewPlaces"));
 const ErrorElement = React.lazy(() => import("./utils/ErrorElement"));
 const UserPlaces = React.lazy(() => import("./places/pages/UserPlaces"));
 const UpdatePlaces = React.lazy(() => import("./places/pages/UpdatePlaces"));
-const AuthLogin = React.lazy(() => import("./user/pages/AuthLogin"));
-const AuthNewUser = React.lazy(() => import("./user/pages/AuthNewUser"));
+// const AuthLogin = React.lazy(() => import("./user/pages/AuthLogin"));
+// const AuthNewUser = React.lazy(() => import("./user/pages/AuthNewUser"));
 
 const route = createBrowserRouter([
   {
