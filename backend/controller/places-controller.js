@@ -6,6 +6,7 @@ const Place = require("../models/place");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 const user = require("../models/user");
+const fs = require("fs");
 
 const getPlacesbyUserID = async (req, res, next) => {
   const params = req.params.uid;
@@ -56,12 +57,13 @@ const getPlaceByID = async (req, res, next) => {
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    console.log("errors-->", errors);
     return next(
       new HttpError("Invalid inputs passed, please check your data.", 422)
     );
   }
 
-  const { title, description, address, creator } = req.body;
+  const { title, description, address } = req.body;
 
   let coordinates;
   try {
@@ -76,7 +78,7 @@ const createPlace = async (req, res, next) => {
     location: coordinates,
     image: req.file.path,
     address,
-    creator,
+    creator: req.userData.userId,
   });
 
   console.log("added place-->", newPlace);
@@ -114,6 +116,12 @@ const editPlace = async (req, res, next) => {
     const error = new HttpError("ID mentioned not found", 500);
     return next(error);
   }
+  console.log("creator id--->", place);
+
+  if (place.creator.toString() !== req.userData.userId) {
+    return next(new HttpError("You are not allowed to edit this place", 401));
+  }
+
   const objectKeys = Object.keys(editedPlaces);
 
   for (let object of objectKeys) {
@@ -146,7 +154,11 @@ const deletePlace = async (req, res, next) => {
     return next(error);
   }
 
-  console.log("to be deleted-->", place);
+  if (place.creator.id !== req.userData.userId) {
+    return next(new HttpError("You are not allowed to delete this place", 401));
+  }
+
+  let imageId = place.image;
 
   try {
     const sess = await mongoose.startSession();
@@ -162,6 +174,10 @@ const deletePlace = async (req, res, next) => {
     );
     return next(error);
   }
+
+  fs.unlink(imageId, (err) => {
+    console.log(err);
+  });
 
   res.status(200).json({ message: "Place deleted" });
 };

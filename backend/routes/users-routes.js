@@ -20,6 +20,6 @@ router.post(
   registerUser
 );
 router.post("/login", loginUser);
-router.use("/", getAllUsers);
+router.get("/", getAllUsers);
 
 module.exports = router;
