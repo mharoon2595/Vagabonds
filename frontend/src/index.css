@@ -15,12 +15,18 @@ code {
 
 
 body{
-  background-image: linear-gradient(to right, #EFEFBB, #D4D3DD);
+  display: block;
+  background: linear-gradient(to right, #EFEFBB, #D4D3DD);
+  background-size:cover;
+  background-repeat: no-repeat; 
   font-family: comic sans ms, serif;
   height: 100vh;
+  min-width: 100vw;
   margin: 0;
+  /* min-width: 330px; */
   /* background-color: grey; */
   box-sizing: border-box;
+  background-attachment: fixed;
 }
 
 .slide-in-left-enter {
@@ -70,6 +76,30 @@ body{
 li{
   text-decoration: none;
 }
+
+ /* @media (max-height: 505px) {
+  body{
+    height:100%
+  }
+} */
+
+
+@media (max-width: 380px) {
+  .minWidth{
+    min-width: 190px;
+    height:100%;
+  }
+  
+}
+
+/* @media (max-width: 330px) {
+  body{
+    overflow-x: scroll;
+    min-width: 100%;
+  }
+  
+}  */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

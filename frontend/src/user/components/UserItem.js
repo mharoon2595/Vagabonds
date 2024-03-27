@@ -1,11 +1,16 @@
 import React from "react";
 import Avatar from "../../shared/components/UIElements/Avatar";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const UserItem = ({ id, placeCount, image, name, isLoading }) => {
+const UserItem = ({ id, placeCount, image, name, isLoading, index }) => {
   console.log("user id--->", id);
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.75 }}
+    >
       {isLoading ? (
         <li>
           <div className="flex justify-center md:block">
@@ -16,9 +21,11 @@ const UserItem = ({ id, placeCount, image, name, isLoading }) => {
         <li>
           <div className="flex justify-center md:block">
             <Link to={`/${id}/places`}>
-              <div className=" m-2 p-4 w-[200px] lg:w-[300px] rounded-md h-auto bg-gradient-to-r from-[#74ebd5] to-[#ACB6E5] text-black hover:bg-yellow-400 hover:scale-95 hover:text-black flex justify-evenly align-middle gap-1 shadow-2xl">
+              <div className=" m-2 p-4 w-[200px] lg:w-[100%] rounded-md h-auto bg-gradient-to-r from-[#74ebd5] to-[#ACB6E5] text-black hover:bg-yellow-400 hover:scale-95 hover:text-black flex justify-evenly align-middle gap-1 shadow-2xl">
                 <div className="w-1/2">
-                  <Avatar image={`http://localhost:5000/${image}`} />
+                  <Avatar
+                    image={`${process.env.REACT_APP_ASSET_URL}${image}`}
+                  />
                 </div>
                 <div className="w-1/2 text-right ">
                   <h2 className="text-wrap lg:text-2xl">{name}</h2>
@@ -32,7 +39,7 @@ const UserItem = ({ id, placeCount, image, name, isLoading }) => {
           </div>
         </li>
       )}
-    </>
+    </motion.div>
   );
 };
 

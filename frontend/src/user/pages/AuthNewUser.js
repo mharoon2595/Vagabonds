@@ -48,10 +48,13 @@ const AuthNewUser = () => {
       formData.append("name", formState.inputs.username.value);
       formData.append("password", formState.inputs.password.value);
       formData.append("image", formState.inputs.image.value);
-      const signup = await fetch("http://localhost:5000/api/users/signup", {
-        method: "POST",
-        body: formData,
-      });
+      const signup = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/users/signup",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const signupResponse = await signup.json();
       if (!signup.ok) {
         throw new Error(signupResponse.message);

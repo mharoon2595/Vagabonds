@@ -32,26 +32,25 @@ const AuthLogin = () => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        }),
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/users/login",
+        {
+          method: "POST",
+          headers: { "Content-type": "application/json" },
+          body: JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        }
+      );
       const loginResponse = await response.json();
       if (!response.ok) {
         throw new Error("Check your credentials and try again");
       }
       setIsLoading(false);
-      console.log("CONTEXT USER ID--->", loginResponse.user);
-      auth.login(
-        loginResponse.user.id,
-        loginResponse.user.name,
-        loginResponse.user.places
-      );
-      console.log("CONTEXT LOGIN STATE--->", auth);
+
+      auth.login(loginResponse.userId, loginResponse.name, loginResponse.token);
+
       navigate("/");
       await swal("Logged In", "Awesome!!", "success");
     } catch (err) {

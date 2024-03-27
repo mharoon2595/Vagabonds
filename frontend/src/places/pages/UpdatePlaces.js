@@ -33,7 +33,7 @@ const UpdatePlaces = () => {
     const fetchPlaces = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/places/${params}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/${params}`
         );
         const responseData = await response.json();
         setPlaces(responseData.place);
@@ -59,10 +59,13 @@ const UpdatePlaces = () => {
     event.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:5000/api/places/${params}`,
+        `${process.env.REACT_APP_BACKEND_URL}/places/${params}`,
         {
           method: "PATCH",
-          headers: { "Content-type": "application/json" },
+          headers: {
+            "Content-type": "application/json",
+            Authorization: "Bearer " + auth.token,
+          },
           body: JSON.stringify({
             title: formState.inputs.title.value,
             description: formState.inputs.description.value,

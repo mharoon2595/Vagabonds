@@ -16,6 +16,7 @@ const PlaceList = (props) => {
   }
 
   console.log("UserId comparison--->", props.userId, auth.userId);
+  console.log("places after deletion--->", props.item);
 
   if (!props.item || props.item.places.length === 0) {
     return (
@@ -53,9 +54,7 @@ const PlaceList = (props) => {
           address={place.address}
           creatorId={place.creator}
           coordinates={place.location}
-          deletionHandler={(pid) => {
-            props.deletionHandler(pid);
-          }}
+          deletionHandler={props.deletionHandler}
         />
       ))}
     </ul>

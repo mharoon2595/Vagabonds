@@ -26,17 +26,17 @@ const MainNavigation = () => {
           setSidebar(false);
         }}
       />
-      <div className="bg-white ">
+      <div className="bg-white min-w-[330px] ">
         <MainHeader>
-          <div className="  flex justify-between align-bottom gap-2 ">
+          <div className="  flex justify-between align-bottom ">
             <div className="flex flex-row-reverse gap-2 sm:hidden my-auto">
               {auth.isLoggedIn && (
-                <div>
+                <div className="my-auto p-1">
                   <Example />
                 </div>
               )}
               <div
-                className=" m-1 p-1 flex flex-col justify-between align-middle w-[40px] h-[30px] cursor-pointer"
+                className=" my-auto mx-1 p-1 flex flex-col justify-between align-middle w-[40px] h-[30px] cursor-pointer"
                 onClick={() => {
                   setSidebar(true);
                 }}
@@ -47,8 +47,11 @@ const MainNavigation = () => {
               </div>
             </div>
 
-            <h1 className=" my-auto mx-2 p-2 text-2xl text-black">
-              <Link to="/">YourPlaces</Link>
+            <h1
+              className=" my-auto mx-2 p-2 text-lg sm:text-[3vw] lg:text-2xl text-black italic "
+              style={{ fontFamily: "Segoe Script" }}
+            >
+              <Link to="/">AdventurersAssemble</Link>
             </h1>
 
             <nav className="hidden sm:flex">

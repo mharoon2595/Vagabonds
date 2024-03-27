@@ -43,9 +43,13 @@ const PlaceItem = ({
 
   const deleteHandler = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/places/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/places/${id}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: "Bearer " + auth.token },
+        }
+      );
       swal("Done", "Deletion successful", "success");
       closeDeleteHandler();
       deletionHandler(id);
@@ -95,10 +99,10 @@ const PlaceItem = ({
           </>
         }
       ></Modal>
-      <div className=" m-2 p-2  flex justify-center">
+      <div className=" m-2 p-2  flex justify-center min-w-[300px]">
         <div className=" flex flex-col w-[60%] sm:w-[50%] h-[400px] sm:h-[550px] justify-between bg-white rounded-lg shadow-xl">
           <img
-            src={`http://localhost:5000/${image}`}
+            src={`${process.env.REACT_APP_ASSET_URL}${image}`}
             className="w-full h-[60%] rounded-t-lg"
           />
           <div className=" mx-2 flex flex-col justify-between items-center text-center ">

@@ -46,10 +46,14 @@ const NewPlaces = () => {
       formData.append("address", formState.inputs.address.value);
       formData.append("creator", auth.userId);
       formData.append("image", formState.inputs.image.value);
-      const response = await fetch("http://localhost:5000/api/places", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        process.env.REACT_APP_BACKEND_URL + "/places",
+        {
+          method: "POST",
+          body: formData,
+          headers: { Authorization: "Bearer " + auth.token },
+        }
+      );
       const addPlace = await response.json();
       if (!response.ok) {
         throw new Error(addPlace.message);
@@ -89,7 +93,7 @@ const NewPlaces = () => {
           element="textarea"
           label="Description"
           errorText="Please enter a valid desription with atleast 5 characters"
-          validators={[VALIDATOR_MINLENGTH(5)]}
+          validators={[VALIDATOR_MINLENGTH(10)]}
           onInput={inputHandler}
         />
         <Input

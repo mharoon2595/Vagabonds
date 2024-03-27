@@ -4,13 +4,11 @@ import { AuthContext } from "../../shared/context/auth-context";
 import swal from "sweetalert";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const DUMMY_PLACES = [];
-
 const UserPlaces = () => {
   const [isLoading, setIsLoading] = useState(false);
   const userId = useParams().userId;
   const auth = useContext(AuthContext);
-  const [places, setPlaces] = useState("");
+  const [loadedPlaces, setLoadedPlaces] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +16,7 @@ const UserPlaces = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:5000/api/places/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         );
         const placesRetrieved = await response.json();
         console.log("JOJO PLACES--->", placesRetrieved);
@@ -26,7 +24,7 @@ const UserPlaces = () => {
           throw new Error("Places could not be fetched");
         }
         setIsLoading(false);
-        setPlaces(placesRetrieved);
+        setLoadedPlaces(placesRetrieved);
       } catch (err) {
         setIsLoading(false);
         navigate("/");
@@ -37,9 +35,12 @@ const UserPlaces = () => {
   }, []);
 
   const refreshListAfterDeletion = (pid) => {
-    setPlaces((prevPlaces) => {
-      console.log("prevPLACES---->", prevPlaces);
-      prevPlaces.places.filter((place) => place.id !== pid);
+    setLoadedPlaces((prevPlaces) => {
+      console.log("prevPlaces--->", prevPlaces);
+      const updatedPlaces = prevPlaces.places.filter(
+        (place) => place.id !== pid
+      );
+      return { places: updatedPlaces };
     });
   };
 
@@ -48,10 +49,8 @@ const UserPlaces = () => {
       <PlaceList
         userId={userId}
         isLoading={isLoading}
-        item={places}
-        deletionHandler={(pid) => {
-          refreshListAfterDeletion(pid);
-        }}
+        item={loadedPlaces}
+        deletionHandler={refreshListAfterDeletion}
       />
     </div>
   );
