@@ -32,7 +32,7 @@ const UserPlaces = () => {
       }
     }
     fetchPlaces();
-  }, []);
+  }, [userId]);
 
   const refreshListAfterDeletion = (pid) => {
     setLoadedPlaces((prevPlaces) => {

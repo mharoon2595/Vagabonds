@@ -9,7 +9,7 @@ const ModalOverlay = (props) => {
       className={
         props.delete
           ? "z-[100] fixed top-[22vh] left-[50%] transform -translate-x-1/2  w-[40%]  bg-white rounded-lg"
-          : "z-[100] fixed top-[22vh] left-[10%]  w-[80%]  bg-white rounded-lg"
+          : "z-[100] fixed top-5 lg:top-[22vh] left-[10%] w-[80%]  bg-white rounded-lg"
       }
     >
       <header className="w-full bg-purple-500 text-center rounded-t-lg ">

@@ -1,0 +1,21 @@
+[debug] [2024-03-28T08:41:30.686Z] ----------------------------------------------------------------------
+[debug] [2024-03-28T08:41:30.688Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\haruh\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init hosting
+[debug] [2024-03-28T08:41:30.689Z] CLI Version:   13.6.0
+[debug] [2024-03-28T08:41:30.689Z] Platform:      win32
+[debug] [2024-03-28T08:41:30.689Z] Node Version:  v20.9.0
+[debug] [2024-03-28T08:41:30.689Z] Time:          Thu Mar 28 2024 14:11:30 GMT+0530 (India Standard Time)
+[debug] [2024-03-28T08:41:30.689Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-28T08:41:30.694Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-28T08:41:30.695Z] > authorizing via signed-in user (mharoon2595@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\haruh\OneDrive\Desktop\vagabonds\frontend
+

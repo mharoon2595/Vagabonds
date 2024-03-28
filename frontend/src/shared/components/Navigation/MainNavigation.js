@@ -6,6 +6,7 @@ import SideDrawer from "./SideDrawer";
 import Backdrops from "../UIElements/Backdrops";
 import Example from "./Dropdown";
 import { AuthContext } from "../../context/auth-context";
+import { AnimatePresence } from "framer-motion";
 
 const MainNavigation = () => {
   const [sidebar, setSidebar] = useState(false);
@@ -20,15 +21,20 @@ const MainNavigation = () => {
           }}
         />
       )}
-      <SideDrawer
-        show={sidebar}
-        onClick={() => {
-          setSidebar(false);
-        }}
-      />
+      <AnimatePresence>
+        {sidebar && (
+          <SideDrawer
+            sidebar={sidebar}
+            show={sidebar}
+            onClick={() => {
+              setSidebar(false);
+            }}
+          />
+        )}
+      </AnimatePresence>
       <div className="sticky top-0 bg-white w-full ">
         <MainHeader>
-          <div className="  flex justify-between align-bottom ">
+          <div className="  flex justify-between align-bottom px-2 ">
             <div className="flex flex-row-reverse gap-2 sm:hidden my-auto">
               {auth.isLoggedIn && (
                 <div className="my-auto p-1">
@@ -51,7 +57,7 @@ const MainNavigation = () => {
               className=" my-auto mx-2 p-2 text-lg sm:text-[3vw] lg:text-2xl text-black italic "
               style={{ fontFamily: "Segoe Script" }}
             >
-              <Link to="/">AdventurersAssemble</Link>
+              <Link to="/">TrekkingTribe</Link>
             </h1>
 
             <nav className="hidden sm:flex">
